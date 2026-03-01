@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Veille - Mathis Chauvin</title>
+    <link rel="stylesheet" href="asset/css/normalize.css">
+    <link rel="stylesheet" href="asset/css/style.css">
+    <link rel="icon" href="asset/image/m.png" type="image/x-icon">
+</head>
+<body>
+    <header id="header">    
+        <div class="container">
+            <a href="index.html"><img src="asset/image/mc.png" alt="Logo" class="logo"></a>       
+            <nav class="underline">      
+                <ul>
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="presentation.html">Présentation</a></li>
+                    <li><a href="entreprise.html">Entreprise</a></li>
+                    <li><a href="projets.html">Projets</a></li>
+                    <li><a href="veille.html">Veille</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header> <main>
+        <section id="Veille" class="bg-light">
+            <div class="container">
+                <h2 id="cequejeveux">Veille</h2>
+            </div>
+            <div class="card-container">
+                <div class="cards">
+                    <img src="asset/image/OPNsense.png" alt="OPNsense">
+                    <h2>Opnsense</h2>
+                    <p>OPNsense est une plate-forme de pare-feu open source</p>
+                    <a href="#" onclick="demanderMotDePasse()">DOC</a>
+                </div>
+                <div class="cards">
+                    <img src="asset/image/GLPI.jpg" alt="GLPI">
+                    <h2>GLPI</h2>
+                    <p>Gestion libre de parc informatique</p>
+                    <a href="#" onclick="demanderMotDePasse()">DOC</a>
+                </div>
+                <div class="cards">
+                    <img src="asset/image/AD.png" alt="AD">
+                    <h2>AD</h2>
+                    <p>Active Directory Windows Server</p>
+                    <a href="#" onclick="demanderMotDePasse()">DOC</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+<script>
+  // Cette fonction transforme un texte en hash SHA-256
+  async function sha256(message) {
+      const msgBuffer = new TextEncoder().encode(message);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+      return hashHex;
+  }
+
+  async function demanderMotDePasse() {
+    // Le hash SHA-256 du mot de passe "1234" est :
+    const hashCorrect = "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4";
+    
+    const motDePasse = prompt("Entrez le mot de passe pour accéder au PDF :");
+    
+    if (motDePasse) {
+        const hashSaisi = await sha256(motDePasse);
+        
+        if (hashSaisi === hashCorrect) {
+             // Si le mot de passe est bon, on ouvre le lien
+             // NOTE : Le lien est toujours visible dans le code source ici
+             window.open("asset/pdf/Doc Windows.pdf", "_blank");
+        } else {
+             alert("Mot de passe incorrect.");
+        }
+    }
+  }
+</script>
+</body>
+</html>
